@@ -1,13 +1,18 @@
 <template>
-  <i class="icon" :class="[`icon-${size}`,type]"></i>
+  <i class="icon" :class="[`icon-${size}`,iconTypes[type]]"></i>
 </template>
 
 <script>
   export default {
     name: "ele-icon",
+    data(){
+      return {
+        iconTypes:["decrease","discount","guarantee","invoice","special"]
+      }
+    },
     props:{
         size:Number,
-        type:String
+        type:Number
     }
   }
 </script>

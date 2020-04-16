@@ -1,6 +1,6 @@
-import goods from "pages/goods.vue";
-import ratings from "pages/ratings.vue";
-import seller from "pages/seller.vue";
+import goods from "pages/ele-goods/ele-goods.vue";
+import ratings from "pages/ele-ratings/ele-ratings.vue";
+import seller from "pages/ele-seller/ele-seller.vue";
 export default [
     {path:"/goods",component:goods},
     {path:"/ratings",component:ratings},

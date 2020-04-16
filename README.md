@@ -94,3 +94,22 @@ module.exports={
 插件搜 ext:styl 安装 这个language-stylus插件才支持后缀为.styl的文件 ;
 
 ```
+
+### day03
+* 配置 http 路由
+* 先把头部数据动态化
+* 一般a.b.c这样的格式超过两个 都让v-if 判断下 有的话在去再去显示,避免报错
+```js
+<div class="support" v-if="seller.supports && seller.supports[0]"> 
+```
+* 过度样式
+```js
+5.1 过渡相关的样式  自己定义一个公共类再去主文件引入
+import "@/common/stylus/transition.styl"
+```
+* 再去做评星组件 stars
+
+* 一个滑屏库 better.scroll github的一个仓库
+```js
+npm install better-scroll@1.15.0 --save  用它指定版 相对比较稳定
+```

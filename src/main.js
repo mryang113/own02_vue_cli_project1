@@ -14,6 +14,11 @@ import router from '@/router'
 import store from '@/store'
 //5. 引用字体图标
 import "@/common/stylus/style.styl"
+// 5.1 过渡相关的样式
+import "@/common/stylus/transition.styl"
+//6. 引入全局组件(icon)
+import icon from "components/ele-icon/ele-icon"
+Vue.component("ele-icon",icon)
 
 
 Vue.config.productionTip = false //忽略控制台警告

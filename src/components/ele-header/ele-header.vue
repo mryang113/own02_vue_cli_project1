@@ -3,82 +3,95 @@
     <div class="top">
       <div class="left">
         <img
-          src="https://fuss10.elemecdn.com/8/40/02872ce8aefe75c16d3190e75ad61jpeg.jpeg"
+          :src="seller.avatar"
           class="avatar"
         />
       </div>
       <div class="right">
         <div class="title">
           <i class="brand"></i>
-          <span class="name">嘉禾一品（温都水城）</span>
+          <span class="name">{{seller.name}}</span>
         </div>
         <div class="info">
-          <span>硅谷专送/38分钟送达</span>
+          <span>{{seller.description}}/{{seller.deliveryTime}}分钟送达</span>
         </div>
-        <div class="support">
-          <ele-icon class="icon" :size="4" type="discount"></ele-icon>
-          <span class="text">在线支付满100送老板,满200送店</span>
+        <!-- 一般a.b.c这样的格式超过两个 都让v-if 判断下 有的话在去再去显示,避免报错 -->
+        <div class="support" v-if="seller.supports && seller.supports[0]">
+          <ele-icon class="icon" :size="1" :type="seller.supports[0].type"></ele-icon>
+          <span class="text">{{seller.supports[0].content}}</span>
         </div>
       </div>
-      <div class="btns">
+      <div class="btns" @click="showMask = true">
           <div>
-              <span class="text">5个</span>
+              <span v-if="seller.supports" class="text">{{seller.supports.length}}个</span>
               <i class="layout-keyboard_arrow_right"></i>
           </div>
       </div>
     </div>
     <!-- 公告 和top 并集  -->
-    <div class="bulletin">
+    <div class="bulletin" @click="showMask = true">
       <div class="content">
         <i class="icon"></i>
-        <span class="text">是以粥为特色的中式营养快餐，自2004年10月18日创立“嘉和一品”品牌至今，不断优化管理，积极创新，立足于“贴近百姓生活，服务千家万户”</span>
+        <span class="text">{{seller.bulletin}}</span>
       </div>
       <i class="layout-keyboard_arrow_right arrow"></i>
     </div>
     <!-- 头部的模糊背景和log图片保持一致 -->
     <div class="bg">
-      <img src="https://fuss10.elemecdn.com/8/40/02872ce8aefe75c16d3190e75ad61jpeg.jpeg" class="avatar">
+      <img :src="seller.bgImg" class="avatar">
     </div>
     <!-- 头部的整个全屏下拉遮罩 -->
-    <div class="mask">
-      <div class="mainWrap">
-        <div class="main">
-          <!--真正存放那内容的地方 在这个内部要清除浮动-->
-          <!--因为main的高度对整个css sticky footer 有着至关重要的作用-->
-          <!--不能让main中浮动的元素影响main的高度-->
-          <h2 class="title">嘉禾一品（温都水城）</h2>
-          <div class="stars"></div>
-          <ele-line class="line">
-            <span class="text">优惠信息</span>
-          </ele-line>
-          <ele-list class="list"></ele-list>
-          <ele-line class="line">
-            <span class="text">商家公告</span>
-          </ele-line>
-          <p class="bulletin">
-            是以粥为特色的中式营养快餐，自2004年10月18日创立“嘉和一品”品牌至今，不断优化管理，积极创新，立足于“贴近百姓生活，服务千家万户”
-            是以粥为特色的中式营养快餐，自2004年10月18日创立“嘉和一品”品牌至今，不断优化管理，积极创新，立足于“贴近百姓生活，服务千家万户”
-          </p>
+    <transition  name="mask">
+      <div class="mask" v-show="showMask"> 
+        <div class="mainWrap">
+          <div class="main">
+            <!--真正存放那内容的地方 在这个内部要清除浮动-->
+            <!--因为main的高度对整个css sticky footer 有着至关重要的作用-->
+            <!--不能让main中浮动的元素影响main的高度-->
+            <h2 class="title">嘉禾一品（温都水城）</h2>
+            <div class="starsWrap">
+              <ele-stars :size="48" :score="seller.score"></ele-stars>
+            </div>
+            <ele-line class="line">
+              <span class="text">优惠信息</span>
+            </ele-line>
+            <ele-list class="list" :supports="seller.supports"></ele-list>
+            <ele-line class="line">
+              <span class="text">商家公告</span>
+            </ele-line>
+            <p class="bulletin">
+              {{seller.bulletin}}
+            </p>
+          </div>
+        </div>
+        <!-- 黏连布局 -->
+        <div class="footer" @click="showMask = false">
+          <i class="layout-close"></i>
         </div>
       </div>
-      <!-- 黏连布局 -->
-      <div class="footer">
-        <i class="layout-close"></i>
-      </div>
-    </div>
+    </transition>
   </div>
 </template>
 
 <script>
-  import icon from 'components/ele-icon/ele-icon.vue'
+  import {mapState} from 'vuex'
   import line from 'components/ele-line/ele-line.vue'
   import list from 'components/ele-list/ele-list.vue'
+  import stars from "components/ele-stars/ele-stars.vue"
   export default {
     name: "ele-header",
+    data(){
+      return {
+        showMask: false
+      }
+    },
+    computed:{
+      ...mapState(["seller"])
+    },
     components:{
-      "ele-icon":icon,
       "ele-line":line,
-      "ele-list":list
+      "ele-list":list,
+      "ele-stars":stars
     }
   };
 </script>
@@ -89,6 +102,7 @@
   .header
     position relative
     background rgba(7,17,27,.5)
+    overflow hidden
     & > .top
       position relative
       display flex
@@ -185,7 +199,7 @@
       right 0
       top 0
       bottom 0
-      filter blur(6px)
+      filter blur(2px)
       img
         width 100%
         height 100%
@@ -211,8 +225,10 @@
             font-weight 700
             color rgba(255,255,255,1)
             text-align center
-          .stars
-            height 24px
+          .starsWrap
+            width 80%
+            margin 0 auto
+            text-align center
             margin-top 16px
             margin-bottom 28px
           .line

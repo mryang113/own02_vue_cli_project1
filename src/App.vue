@@ -18,19 +18,19 @@
 
 <script>
   import header from "components/ele-header/ele-header.vue"
+  import {mapActions} from 'vuex'
+  import {GETSELLER} from 'store/mutation_types'
   export default {
     name: 'App',
     components:{
           "ele-header":header
       },
-
-
-
-    // async mounted(){
-    //   const body = await this.$axios.seller.getSeller();
-    //   console.log(body.data);
-
-    // }
+    methods: {
+      ...mapActions([GETSELLER])
+    },
+    mounted(){
+      this[GETSELLER]()
+    }
 
   }
 </script>
@@ -39,8 +39,13 @@
 <style scoped lang="stylus" rel="stylesheet/stylus">
   @import "./common/stylus/mixin";  //此时import 是stylus语法.后缀 .styl可以省略
   #app 
+    position relative
+    width 100%
+    height 100%
+    overflow hidden
     .navs
-      /* position relative
+      /* 
+      position relative
       &:after
         position absolute
         left 0

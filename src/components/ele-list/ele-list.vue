@@ -1,37 +1,20 @@
 <template>
     <div class="list">
         <ul>
-            <li>
-                <ele-icon class="icon" :size="2" type="decrease"></ele-icon>
-                <span>在线支付满100送天禹</span>
-            </li>
-            <li>
-                <ele-icon class="icon" :size="2" type="discount"></ele-icon>
-                <span>单人精彩套餐</span>
-            </li>
-            <li>
-                <ele-icon class="icon" :size="2" type="discount"></ele-icon>
-                <span>海狗人参丸八折起购</span>
-            </li>
-            <li>
-                <ele-icon class="icon" :size="2" type="special"></ele-icon>
-                <span>特价商品</span>
-            </li>
-            <li>
-                <ele-icon class="icon" :size="2" type="special"></ele-icon>
-                <span>单人特色套餐</span>
+            <li v-for="(item,index) in supports" :key="index">
+                <ele-icon class="icon" :size="2" :type="item.type"></ele-icon>
+                <span>{{item.content}}</span>
             </li>
         </ul>
     </div>
 </template>
 
 <script>
-    import icon from "components/ele-icon/ele-icon"
     export default {
         name: "ele-list",
-        components:{
-            "ele-icon":icon
-        }
+        props:{
+          supports:Array
+        },
     }
 </script>
 
