@@ -111,5 +111,5 @@ import "@/common/stylus/transition.styl"
 
 * 一个滑屏库 better.scroll github的一个仓库
 ```js
-npm install better-scroll@1.15.0 --save  用它指定版 相对比较稳定
+10  npm install better-scroll@1.15.0 --save  用它指定版 相对比较稳定
 ```
